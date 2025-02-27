@@ -4,7 +4,37 @@
   "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
   
 <mapper namespace="com.yedam.mapper.BoardMapper">
-  <select id="selectAll" resultType="com.yedam.vo.BoardVO">
-    select * from tbl_board
+  <select id="selectAll" resultType="board">
+    select board_no as boardNo, 
+           title as boardTitle, 
+           content as boardContent, 
+           writer as boardWriter, 
+           write_date as boardDate, 
+           view_cnt as boardView, 
+           img
+           from tbl_board
+           order by board_no
   </select>
+  
+  <select id="selectBoard" resultType="board" parameterType = "int">
+  	select board_no as boardNo, 
+           title as boardTitle, 
+           content as boardContent, 
+           writer as boardWriter, 
+           write_date as boardDate, 
+           view_cnt as boardView, 
+           img 
+           from tbl_board where board_no = #{bno}
+  
+  </select>
+  
+  <insert id="insertBoard" parameterType="board">
+  	insert into tbl_board (board_no, title, content, writer) 
+  	values (board_seq.nextval, #{boardTitle}, #{boardContent}, #{boardWriter})
+  </insert>
+  
+  <delete id="deleteBoard" parameterType = "int">
+  	delete from tbl_board where board_no = #{bno}
+  	
+  </delete>
 </mapper>
